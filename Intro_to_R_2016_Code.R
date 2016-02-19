@@ -104,9 +104,13 @@ getwd()		          # What directory are we in?
 # R will read and write files to the working directory, unless otherwise specified
 setwd("~/Desktop")	# You can change your working directory
 
-## Read in data
+## Read in data from the web
 dat <- read.table("http://www.stat.yale.edu/~blc3/IntroR2015/remote_weight.txt",
                    header=T, sep="", row.names=NULL, as.is = TRUE)	
+## Read in Data from local folder
+dat <- read.table("remote_weight.txt",
+                  header=T, sep="", row.names=NULL, as.is = TRUE)
+
 # Read data including headers, data separated by spaces, no row names
 ls()			          # List all variables stored in memory
 head(dat)           # Shows the first 6 rows of the data
