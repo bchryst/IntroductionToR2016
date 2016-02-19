@@ -102,7 +102,7 @@ help(plot) # You can use the help function, the argument is an R function
 ## Reading in your data
 getwd()		          # What directory are we in?
 # R will read and write files to the working directory, unless otherwise specified
-setwd("~/Desktop")	# You can change your working directory
+setwd("C:\Users\blc3\Desktop\IntroductionToR2016-master")	# You can change your working directory
 
 ## Read in data from the web
 dat <- read.table("http://www.stat.yale.edu/~blc3/IntroR2015/remote_weight.txt",
