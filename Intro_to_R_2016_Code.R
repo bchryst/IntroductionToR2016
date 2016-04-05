@@ -1,7 +1,7 @@
 ## Introduction to R
-## Breanne Chryst and Sara Bastomski
+## Breanne Chryst 
 ## CSSSI StatLab
-## Feb 19, 2016
+## April 6, 2016
 
 ##########################################################
 ## R Basics
@@ -24,7 +24,7 @@ x <- 5 # 5 has now been assigned to the variable x
 
 # the "<-" assigns the value on the right to the name on the left. Made by "alt -"
 
-x
+x # Evaluation
 
 x^2
 
@@ -40,6 +40,11 @@ y[3:5] # extracts the 3rd to 5th elements in the vector y
 
 sub.y <- y[3:5]
 sub.y
+
+## Value Comparison
+2==2  # Equality
+2!=2  # Inequality
+x <= y # less than or equal: "<", ">", and ">=" also work
 
 ## Other ways to make vectors:
 array(data = 0, dim = 3)
@@ -76,12 +81,20 @@ dat <- as.data.frame(z)
 names(dat) <- c("cat", "giraffe","bowlingball")
 dat
 
+dat2 <- data.frame( ID=1:4,
+                    FirstName=c("Batman","Robin","Ivy","Joker"),
+                    Female=c(F,F,T,F), 
+                    Age=c(22,33,44,55) )
+
+dat2$FirstName   # Access the second column of dfr1. 
+
 ## R has base functions:
 mean(y)
 length(y)
 sd(y)
 var(y)
 prod(y) # Takes the product of each element in the vector
+cor(z)
 apply(z, 2, mean) # Very useful in avoiding for loops, also has useful cousins sapply and lapply
 
 ##########################################################
@@ -102,14 +115,14 @@ help(plot) # You can use the help function, the argument is an R function
 ## Reading in your data
 getwd()		          # What directory are we in?
 # R will read and write files to the working directory, unless otherwise specified
-setwd("C:\Users\blc3\Desktop\IntroductionToR2016-master")	# You can change your working directory
+setwd("~/IntroductionToR2016")	# You can change your working directory
 
 ## Read in data from the web
-dat <- read.table("http://www.stat.yale.edu/~blc3/IntroR2015/remote_weight.txt",
+dat <- read.table("http://www.stat.yale.edu/~blc3/IntroR2016/remote_weight.txt",
                    header=T, sep="", row.names=NULL, as.is = TRUE)	
 ## Read in Data from local folder
-dat <- read.table("remote_weight.txt",
-                  header=T, sep="", row.names=NULL, as.is = TRUE)
+dat <- read.table("~/IntroductionToR2016/remote_weight.txt",
+                  header=T, sep="", as.is = TRUE)
 
 # Read data including headers, data separated by spaces, no row names
 ls()			          # List all variables stored in memory
@@ -130,6 +143,7 @@ dat[1:10,"weight"]	# See only the first 10 values of the weight col.
 dat[,-1]	          # See all but the first column of data
 dat.o <- dat	    # Copy the data frame to a data.frame named dat.0
 ls()			          # Now we have 5 variables: 'x', 'y', 'z', 'dat' and 'dat.o'
+table(dat$group)
 
 ## Getting familiar with the data
 summary(dat)		    # Generate summary statistics of data
@@ -141,17 +155,17 @@ pairs(dat[,-1])
 # See scatterplots for all pairs of variables except the first ('id') in the data frame
 plot(remote ~ weight, data = dat)	# Scatterplot of 'weight' vs. 'remote'
 
-# Changing data type
+## Changing data type
 class(dat$gender)  # What kind of variable is 'gender'?
 dat$gender <- factor(dat$gender)	# Converts 'gender' from type integer to factor 
 class(dat$gender)	# Verify that gender is now indeed of type factor
 dat$gender			    # See all data in column 'gender'; note "Levels: 0 1" at the bottom
 
-# Attaching the data frame
+## Attaching the data frame
 attach(dat)		    # Attach the data frame
 remote			        # Now we can refer directly to the variable without using $
 
-# Basic Graphics
+## Basic Graphics
 hist(remote)			  # Histogram of 'remote'
 hist(weight)			  # Histogram of 'weight'
 boxplot(remote,weight)  	  # Boxplot of 'remote' and 'weight' 
@@ -179,8 +193,8 @@ summary(mod3)			  # See regression table for model 3 (remote ~ weight + gender)
 summary(mod4)			  # See regression table for model 4 (remote ~ weight*gender)
 anova(mod3,mod4)		# Prints ANOVA table comparing model 3 to model 4 (delta F)
 
-# Regression diagnostics
-mod3.1 <- lm(remote ~ weight + gender)	# Gives you regression diagnostics
+## Regression diagnostics
+mod3.1 <- lm(remote ~ weight + gender)	
 par(mfrow=c(2,2))		# Set up plotting region for a 2x2 grid
 plot(mod3.1)			  # Plot the regression diagnostics (R knows automatically to do this)
 
@@ -188,6 +202,10 @@ plot(mod3.1)			  # Plot the regression diagnostics (R knows automatically to do 
 pdf("prettygraph.pdf")	# Turn on the PDF device and open a blank file called "prettygraph.ps"
 plot(mod3.1)			# Plot the model
 dev.off()			    # Turn off the postscript device
+
+## Chi-squared Test
+chisq.test(gender, group)
+
 
 ##########################################################
 ## Intro to Simulation and Functions with R:
